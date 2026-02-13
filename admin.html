@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Avatar Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .hidden{display:none}
+    textarea{min-height:90px}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./index.html">
+      <span class="logo" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+          <path d="M32 6l22 12v28L32 58 10 46V18L32 6z" stroke="currentColor" stroke-width="3"/>
+          <path d="M20 28l12 7 12-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brandText">
+        <strong>Avatar Admin</strong>
+        <small class="muted">تحكم كامل في المتجر</small>
+      </span>
+    </a>
+    <div class="topbarActions">
+      <button class="btnGhost" id="logoutBtn" type="button" style="display:none">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="authCard">
+      <h2>تسجيل دخول الأدمن</h2>
+      <div class="row">
+        <label class="field grow">
+          <span>Email</span>
+          <input id="email" type="email" placeholder="you@email.com">
+        </label>
+        <label class="field grow">
+          <span>Password</span>
+          <input id="pass" type="password" placeholder="••••••••">
+        </label>
+      </div>
+      <button class="btnPrimary" id="loginBtn" type="button">Login</button>
+      <p class="muted note" id="authMsg"></p>
+    </section>
+
+    <section class="card hidden" id="adminCard">
+      <div class="tabs">
+        <button class="btnGhost" data-tab="settings">الإعدادات</button>
+        <button class="btnGhost" data-tab="products">المنتجات</button>
+        <button class="btnGhost" data-tab="shipping">الشحن</button>
+        <button class="btnGhost" data-tab="payments">الدفع</button>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="tab-settings" class="section">
+        <h2>إعدادات المتجر</h2>
+        <div class="row">
+          <label class="field grow"><span>اسم المتجر (AR)</span><input id="storeNameAr"></label>
+          <label class="field grow"><span>Store name (EN)</span><input id="storeNameEn"></label>
+        </div>
+        <div class="row">
+          <label class="field grow"><span>Logo URL (رابط صورة اللوجو)</span><input id="logoUrl" placeholder="https://..."></label>
+          <label class="field"><span>Accent Color</span><input id="accent" type="text" placeholder="#e11d48"></label>
+        </div>
+        <button class="btnPrimary" id="saveSettings" type="button">حفظ الإعدادات</button>
+        <p class="muted note" id="settingsMsg"></p>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div id="tab-products" class="section hidden">
+        <h2>المنتجات</h2>
+
+        <div class="card" style="margin-top:10px">
+          <h3 style="margin:0 0 10px 0">إضافة/تعديل منتج</h3>
+
+          <div class="row">
+            <label class="field grow"><span>Slug (فريد)</span><input id="pSlug" placeholder="men-hoodie-black"></label>
+            <label class="field"><span>Gender</span>
+              <select id="pGender"><option value="MEN">MEN</option><option value="WOMEN">WOMEN</option></select>
+            </label>
+            <label class="field"><span>Type</span>
+              <select id="pType"><option value="CLOTHING">CLOTHING</option><option value="ACCESSORY">ACCESSORY</option><option value="SHOES">SHOES</option></select>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="field grow"><span>Title AR</span><input id="pTitleAr"></label>
+            <label class="field grow"><span>Title EN</span><input id="pTitleEn"></label>
+            <label class="field"><span>Price (EGP)</span><input id="pPrice" type="number" min="0"></label>
+          </div>
+
+          <div class="row">
+            <label class="field grow"><span>Desc AR</span><textarea id="pDescAr"></textarea></label>
+            <label class="field grow"><span>Desc EN</span><textarea id="pDescEn"></textarea></label>
+          </div>
+
+          <div class="row">
+            <label class="field grow"><span>Colors (افصل بفاصلة)</span><input id="pColors" placeholder="Black, White, Beige"></label>
+            <label class="field grow"><span>Sizes (افصل بفاصلة)</span><input id="pSizes" placeholder="S,M,L أو 40,41,42"></label>
+          </div>
+
+          <label class="field">
+            <span>Images URLs (كل سطر رابط صورة)</span>
+            <textarea id="pImages" placeholder="https://...jpg&#10;https://...png"></textarea>
+          </label>
+
+          <div class="row">
+            <button class="btnPrimary" id="saveProduct" type="button">حفظ المنتج</button>
+            <button class="btnGhost" id="clearProduct" type="button">مسح الحقول</button>
+          </div>
+
+          <p class="muted note" id="productMsg"></p>
+        </div>
+
+        <div class="section">
+          <h3 style="margin:0 0 10px 0">قائمة المنتجات</h3>
+          <div id="productsList" class="cartItems"></div>
+        </div>
+      </div>
+
+      <!-- SHIPPING -->
+      <div id="tab-shipping" class="section hidden">
+        <h2>الشحن</h2>
+
+        <div class="card" style="margin-top:10px">
+          <h3 style="margin:0 0 10px 0">إضافة محافظة + سعر شحن</h3>
+          <div class="row">
+            <label class="field grow"><span>المحافظة AR</span><input id="gAr"></label>
+            <label class="field grow"><span>Governorate EN</span><input id="gEn"></label>
+          </div>
+          <div class="row">
+            <label class="field"><span>سعر الشحن</span><input id="gPrice" type="number" min="0"></label>
+            <label class="field"><span>ETA (مثال 2-4)</span><input id="gEta" placeholder="2-4"></label>
+            <label class="field"><span>Free over (اختياري)</span><input id="gFree" type="number" min="0"></label>
+          </div>
+          <button class="btnPrimary" id="addGov" type="button">إضافة</button>
+          <p class="muted note" id="shipMsg"></p>
+        </div>
+
+        <div class="section">
+          <h3 style="margin:0 0 10px 0">المحافظات والأسعار</h3>
+          <div id="govList" class="cartItems"></div>
+        </div>
+
+        <div class="card" style="margin-top:10px">
+          <h3 style="margin:0 0 10px 0">شركات الشحن</h3>
+          <div class="row">
+            <label class="field grow"><span>اسم الشركة</span><input id="cName"></label>
+            <label class="field grow"><span>تليفون</span><input id="cPhone"></label>
+          </div>
+          <label class="field"><span>ملاحظات</span><input id="cNotes"></label>
+          <button class="btnPrimary" id="addCompany" type="button">إضافة شركة</button>
+          <div id="companyList" class="cartItems" style="margin-top:10px"></div>
+        </div>
+      </div>
+
+      <!-- PAYMENTS -->
+      <div id="tab-payments" class="section hidden">
+        <h2>طرق الدفع</h2>
+        <p class="muted note">تقدر تشغّل/تقفل طرق الدفع وتكتب تعليمات (مهم لـ InstaPay).</p>
+        <div id="payList" class="cartItems"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script src="./admin.js"></script>
+</body>
+  </html>
