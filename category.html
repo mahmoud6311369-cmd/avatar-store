@@ -1,1 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Avatar | المنتجات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./index.html">
+      <span class="logo" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+          <path d="M32 6l22 12v28L32 58 10 46V18L32 6z" stroke="currentColor" stroke-width="3"/>
+          <path d="M20 28l12 7 12-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brandText">
+        <strong>Avatar</strong>
+        <small data-i18n="products">المنتجات</small>
+      </span>
+    </a>
 
+    <div class="topbarActions">
+      <button class="btnGhost" id="langBtn" type="button">EN</button>
+      <a class="btnGhost" href="./cart.html">
+        <span data-i18n="cart">السلة</span>
+        <span class="pill" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section card">
+      <div class="filters">
+        <label class="field">
+          <span data-i18n="gender">الفئة</span>
+          <select id="genderFilter">
+            <option value="" data-i18n="all">الكل</option>
+            <option value="MEN" data-i18n="men">رجالي</option>
+            <option value="WOMEN" data-i18n="women">حريمي</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span data-i18n="type">النوع</span>
+          <select id="typeFilter">
+            <option value="" data-i18n="all">الكل</option>
+            <option value="CLOTHING" data-i18n="clothing">ملابس</option>
+            <option value="ACCESSORY" data-i18n="accessories">إكسسوارات</option>
+            <option value="SHOES" data-i18n="shoes">أحذية/كوتشيات</option>
+          </select>
+        </label>
+
+        <label class="field grow">
+          <span data-i18n="search">بحث</span>
+          <input id="q" type="search" placeholder="تيشيرت / شنطة / كوتشي..." />
+        </label>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid" id="productsGrid"></div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+  <script>
+    AvatarApp.initPage("category");
+  </script>
+</body>
+</html>
