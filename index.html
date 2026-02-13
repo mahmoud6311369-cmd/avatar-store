@@ -1,1 +1,105 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Avatar Store | أفاتار</title>
+  <meta name="description" content="Avatar Store - ملابس، إكسسوارات، أحذية رجالي وحريمي. شحن حسب المحافظة وطرق دفع متعددة." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./index.html">
+      <span class="logo" aria-hidden="true">
+        <!-- Logo placeholder -->
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+          <path d="M32 6l22 12v28L32 58 10 46V18L32 6z" stroke="currentColor" stroke-width="3"/>
+          <path d="M20 28l12 7 12-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brandText">
+        <strong data-i18n="brand">Avatar</strong>
+        <small data-i18n="tagline">Men • Women • Shoes • Accessories</small>
+      </span>
+    </a>
 
+    <div class="topbarActions">
+      <button class="btnGhost" id="langBtn" type="button">EN</button>
+      <a class="btnGhost" href="./cart.html">
+        <span data-i18n="cart">السلة</span>
+        <span class="pill" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <div class="heroText">
+        <h1 data-i18n="heroTitle">Avatar — ستايلك في مكان واحد</h1>
+        <p data-i18n="heroDesc">ملابس • إكسسوارات • كوتشيات/أحذية — رجالي وحريمي. شحن حسب المحافظة وطرق دفع أونلاين.</p>
+        <div class="heroCtas">
+          <a class="btnPrimary" href="./category.html?gender=MEN" data-i18n="shopMen">تسوق رجالي</a>
+          <a class="btnSecondary" href="./category.html?gender=WOMEN" data-i18n="shopWomen">تسوق حريمي</a>
+          <a class="btnGhost" href="./category.html?type=SHOES" data-i18n="shopShoes">الأحذية</a>
+        </div>
+      </div>
+      <div class="heroArt" aria-hidden="true">
+        <div class="badge">EGP</div>
+        <div class="gridArt"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sectionHeader">
+        <h2 data-i18n="featured">مختارات اليوم</h2>
+        <a class="link" href="./category.html" data-i18n="browseAll">تصفح الكل</a>
+      </div>
+      <div class="grid" id="featuredGrid"></div>
+    </section>
+
+    <section class="section card">
+      <div class="sectionHeader">
+        <h2 data-i18n="shippingTitle">الشحن حسب المحافظة</h2>
+      </div>
+
+      <div class="shippingCalc">
+        <label class="field">
+          <span data-i18n="gov">المحافظة</span>
+          <select id="govSelect"></select>
+        </label>
+
+        <div class="shipResult">
+          <div>
+            <div class="muted" data-i18n="shipPrice">سعر الشحن</div>
+            <div class="price" id="shipPrice">—</div>
+          </div>
+          <div>
+            <div class="muted" data-i18n="shipEta">مدة التوصيل</div>
+            <div class="price" id="shipEta">—</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note muted" data-i18n="shipNote">
+        * الأسعار دي تجريبية. هتقدر تعدلها من لوحة الأدمن بعد الربط.
+      </p>
+    </section>
+
+    <footer class="footer muted">
+      <div>© <span id="year"></span> <strong>Avatar</strong></div>
+      <div class="footerLinks">
+        <a class="link" href="./cart.html" data-i18n="checkout">الدفع</a>
+        <a class="link" href="./category.html" data-i18n="browseAll">تصفح المنتجات</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+  <script>
+    AvatarApp.initPage("home");
+  </script>
+</body>
+</html>
