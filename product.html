@@ -1,1 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Avatar | المنتج</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./index.html">
+      <span class="logo" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+          <path d="M32 6l22 12v28L32 58 10 46V18L32 6z" stroke="currentColor" stroke-width="3"/>
+          <path d="M20 28l12 7 12-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brandText">
+        <strong>Avatar</strong>
+        <small data-i18n="product">منتج</small>
+      </span>
+    </a>
 
+    <div class="topbarActions">
+      <button class="btnGhost" id="langBtn" type="button">EN</button>
+      <a class="btnGhost" href="./cart.html">
+        <span data-i18n="cart">السلة</span>
+        <span class="pill" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card productPage">
+      <div class="productImg" id="productImg"></div>
+      <div class="productInfo">
+        <h1 id="pTitle">—</h1>
+        <div class="muted" id="pMeta">—</div>
+        <div class="price big" id="pPrice">—</div>
+
+        <div class="row">
+          <label class="field">
+            <span data-i18n="color">اللون</span>
+            <select id="colorSelect"></select>
+          </label>
+          <label class="field">
+            <span data-i18n="size">المقاس</span>
+            <select id="sizeSelect"></select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="field">
+            <span data-i18n="qty">الكمية</span>
+            <input id="qty" type="number" min="1" value="1" />
+          </label>
+
+          <button class="btnPrimary" id="addToCart" type="button" data-i18n="addToCart">أضف للسلة</button>
+        </div>
+
+        <p class="muted" id="pDesc"></p>
+        <a class="link" href="./category.html" data-i18n="backToShop">رجوع للمنتجات</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+  <script>
+    AvatarApp.initPage("product");
+  </script>
+</body>
+</html>
