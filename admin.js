@@ -45,6 +45,24 @@ async function uploadToBucket(file, folder="products"){
   return data.publicUrl;
 }
 
+// ---------- Accent Picker Sync (بدون كود) ----------
+function wireAccentPicker(){
+  const picker = $("accentPicker");
+  const hex = $("accent");
+  if(!picker || !hex) return;
+
+  // من الـ picker → للـ hex
+  picker.addEventListener("input", ()=>{
+    hex.value = picker.value;
+  });
+
+  // من الـ hex → للـ picker (لو المستخدم كتب يدوي)
+  hex.addEventListener("input", ()=>{
+    const v = (hex.value || "").trim();
+    if(/^#([0-9a-fA-F]{6})$/.test(v)) picker.value = v;
+  });
+}
+
 // ---------- Auth UI ----------
 async function ensureAuthUI(){
   const { data: { session } } = await sb.auth.getSession();
@@ -75,24 +93,51 @@ async function loadSettings(){
 
   $("storeNameAr").value = data.store_name_ar || "Avatar";
   $("storeNameEn").value = data.store_name_en || "Avatar";
-  $("logoUrl").value = data.logo_url || "";
-  $("accent").value = data.accent || "#e11d48";
+
+  if ($("logoUrl")) $("logoUrl").value = data.logo_url || "";
+
+  const accent = data.accent || "#e11d48";
+  if ($("accent")) $("accent").value = accent;
+  if ($("accentPicker")) $("accentPicker").value = accent;
 }
 
 $("saveSettings").onclick = async ()=>{
   $("settingsMsg").textContent = "";
 
-  const payload = {
-    id: 1,
-    store_name_ar: $("storeNameAr").value.trim(),
-    store_name_en: $("storeNameEn").value.trim(),
-    logo_url: $("logoUrl").value.trim() || null,
-    accent: $("accent").value.trim() || "#e11d48",
-    updated_at: new Date().toISOString()
-  };
+  try{
+    // ✅ 1) Upload Logo لو المستخدم اختار ملف
+    let logoUrl = ($("logoUrl")?.value || "").trim() || null;
+    const logoFile = (($("logoFile")?.files) || [])[0];
 
-  const { error } = await sb.from("store_settings").upsert(payload);
-  $("settingsMsg").textContent = error ? error.message : "✅ تم الحفظ";
+    if(logoFile){
+      // رفع اللوجو داخل فولدر branding
+      logoUrl = await uploadToBucket(logoFile, "branding/logo");
+      if ($("logoUrl")) $("logoUrl").value = logoUrl; // يتعبّى تلقائي
+    }
+
+    // ✅ 2) Accent from picker (بدون كود)
+    const accentValue =
+      ($("accentPicker")?.value || "").trim()
+      || ($("accent")?.value || "").trim()
+      || "#e11d48";
+
+    if ($("accent")) $("accent").value = accentValue;
+    if ($("accentPicker")) $("accentPicker").value = accentValue;
+
+    const payload = {
+      id: 1,
+      store_name_ar: $("storeNameAr").value.trim(),
+      store_name_en: $("storeNameEn").value.trim(),
+      logo_url: logoUrl,
+      accent: accentValue,
+      updated_at: new Date().toISOString()
+    };
+
+    const { error } = await sb.from("store_settings").upsert(payload);
+    $("settingsMsg").textContent = error ? error.message : "✅ تم الحفظ (اللوجو + اللون)";
+  }catch(e){
+    $("settingsMsg").textContent = e?.message || "حصل خطأ أثناء حفظ الإعدادات";
+  }
 };
 
 // -------- Products --------
@@ -107,6 +152,7 @@ $("clearProduct").onclick = ()=>{
   if ($("pImagesFiles")) $("pImagesFiles").value = "";
   if ($("pVideoFile")) $("pVideoFile").value = "";
 
+  // 👈 خلي الافتراضي MEN
   $("pGender").value="MEN";
   $("pType").value="CLOTHING";
   $("productMsg").textContent="";
@@ -162,7 +208,6 @@ $("saveProduct").onclick = async ()=>{
       colors: parseCsv($("pColors").value),
       sizes: parseCsv($("pSizes").value),
 
-      // الجديد
       images,
       video_url,
       highlights,
@@ -226,7 +271,6 @@ async function loadProducts(){
       $("pColors").value = (p.colors||[]).join(", ");
       $("pSizes").value = (p.sizes||[]).join(", ");
 
-      // الجديد (نعرضهم في textareas للتعديل)
       if ($("pHighlights")) $("pHighlights").value = (p.highlights||[]).join("\n");
 
       if ($("pAttrs")) {
@@ -238,7 +282,6 @@ async function loadProducts(){
         $("pAttrs").value = lines.join("\n");
       }
 
-      // لا نقدر نعمل fill للـ file input
       if ($("pImagesFiles")) $("pImagesFiles").value = "";
       if ($("pVideoFile")) $("pVideoFile").value = "";
 
@@ -408,6 +451,7 @@ async function refreshAll(){
 
 (async function(){
   tab("settings");
+  wireAccentPicker(); // ✅ ربط اللون
   await ensureAuthUI();
   sb.auth.onAuthStateChange(async ()=>{ await ensureAuthUI(); });
 })();
