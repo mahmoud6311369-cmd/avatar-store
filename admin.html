@@ -106,10 +106,25 @@
             <label class="field grow"><span>Sizes (افصل بفاصلة)</span><input id="pSizes" placeholder="S,M,L أو 40,41,42"></label>
           </div>
 
-          <label class="field">
-            <span>Images URLs (كل سطر رابط صورة)</span>
-            <textarea id="pImages" placeholder="https://...jpg&#10;https://...png"></textarea>
-          </label>
+         <label class="field">
+  <span>صور المنتج (Upload)</span>
+  <input id="pImagesFiles" type="file" accept="image/*" multiple>
+</label>
+
+<label class="field">
+  <span>فيديو المنتج (Upload)</span>
+  <input id="pVideoFile" type="file" accept="video/*">
+</label>
+
+<label class="field">
+  <span>Highlights (كل سطر نقطة)</span>
+  <textarea id="pHighlights" rows="4"></textarea>
+</label>
+
+<label class="field">
+  <span>Attributes (كل سطر: اسم: قيمة)</span>
+  <textarea id="pAttrs" rows="6"></textarea>
+</label>
 
           <div class="row">
             <button class="btnPrimary" id="saveProduct" type="button">حفظ المنتج</button>
@@ -174,4 +189,4 @@
   <script src="./config.js"></script>
   <script src="./admin.js"></script>
 </body>
-  </html>
+</html>
