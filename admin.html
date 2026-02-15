@@ -61,14 +61,39 @@
       <!-- SETTINGS -->
       <div id="tab-settings" class="section">
         <h2>إعدادات المتجر</h2>
+
         <div class="row">
           <label class="field grow"><span>اسم المتجر (AR)</span><input id="storeNameAr"></label>
           <label class="field grow"><span>Store name (EN)</span><input id="storeNameEn"></label>
         </div>
+
+        <!-- ✅ تعديل: رفع لوجو + Color Picker -->
         <div class="row">
-          <label class="field grow"><span>Logo URL (رابط صورة اللوجو)</span><input id="logoUrl" placeholder="https://..."></label>
-          <label class="field"><span>Accent Color</span><input id="accent" type="text" placeholder="#e11d48"></label>
+          <label class="field grow">
+            <span>رفع لوجو (Upload)</span>
+            <input id="logoFile" type="file" accept="image/*">
+            <small class="muted">ارفع صورة اللوجو من جهازك</small>
+          </label>
+
+          <label class="field grow">
+            <span>Logo URL (تلقائي بعد الرفع)</span>
+            <input id="logoUrl" placeholder="هيتم ملؤه تلقائيًا بعد رفع اللوجو" readonly>
+          </label>
         </div>
+
+        <div class="row">
+          <label class="field grow">
+            <span>Accent Color</span>
+            <input id="accentPicker" type="color" value="#e11d48" style="height:44px;padding:6px;">
+            <small class="muted">اختار اللون من غير ما تكتب كود</small>
+          </label>
+
+          <label class="field">
+            <span>Hex</span>
+            <input id="accent" type="text" placeholder="#e11d48">
+          </label>
+        </div>
+
         <button class="btnPrimary" id="saveSettings" type="button">حفظ الإعدادات</button>
         <p class="muted note" id="settingsMsg"></p>
       </div>
@@ -82,11 +107,23 @@
 
           <div class="row">
             <label class="field grow"><span>Slug (فريد)</span><input id="pSlug" placeholder="men-hoodie-black"></label>
+
             <label class="field"><span>Gender</span>
-              <select id="pGender"><option value="MEN">MEN</option><option value="WOMEN">WOMEN</option></select>
+              <!-- ✅ تعديل: ولادي/بناتي -->
+              <select id="pGender">
+                <option value="MEN">MEN</option>
+                <option value="WOMEN">WOMEN</option>
+                <option value="KIDS_BOYS">KIDS_BOYS</option>
+                <option value="KIDS_GIRLS">KIDS_GIRLS</option>
+              </select>
             </label>
+
             <label class="field"><span>Type</span>
-              <select id="pType"><option value="CLOTHING">CLOTHING</option><option value="ACCESSORY">ACCESSORY</option><option value="SHOES">SHOES</option></select>
+              <select id="pType">
+                <option value="CLOTHING">CLOTHING</option>
+                <option value="ACCESSORY">ACCESSORY</option>
+                <option value="SHOES">SHOES</option>
+              </select>
             </label>
           </div>
 
@@ -106,25 +143,25 @@
             <label class="field grow"><span>Sizes (افصل بفاصلة)</span><input id="pSizes" placeholder="S,M,L أو 40,41,42"></label>
           </div>
 
-         <label class="field">
-  <span>صور المنتج (Upload)</span>
-  <input id="pImagesFiles" type="file" accept="image/*" multiple>
-</label>
+          <label class="field">
+            <span>صور المنتج (Upload)</span>
+            <input id="pImagesFiles" type="file" accept="image/*" multiple>
+          </label>
 
-<label class="field">
-  <span>فيديو المنتج (Upload)</span>
-  <input id="pVideoFile" type="file" accept="video/*">
-</label>
+          <label class="field">
+            <span>فيديو المنتج (Upload)</span>
+            <input id="pVideoFile" type="file" accept="video/*">
+          </label>
 
-<label class="field">
-  <span>Highlights (كل سطر نقطة)</span>
-  <textarea id="pHighlights" rows="4"></textarea>
-</label>
+          <label class="field">
+            <span>Highlights (كل سطر نقطة)</span>
+            <textarea id="pHighlights" rows="4"></textarea>
+          </label>
 
-<label class="field">
-  <span>Attributes (كل سطر: اسم: قيمة)</span>
-  <textarea id="pAttrs" rows="6"></textarea>
-</label>
+          <label class="field">
+            <span>Attributes (كل سطر: اسم: قيمة)</span>
+            <textarea id="pAttrs" rows="6"></textarea>
+          </label>
 
           <div class="row">
             <button class="btnPrimary" id="saveProduct" type="button">حفظ المنتج</button>
